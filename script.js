@@ -358,9 +358,6 @@ function renderQuote(index, elements) {
 
   elements.quote.textContent = item.text;
   elements.quote.dataset.quoteIndex = String(index);
-  elements.quote.classList.toggle("quote-long", item.text.length > 150);
-  elements.quote.classList.toggle("quote-extra-long", item.text.length > 190);
-  elements.quote.classList.toggle("quote-dialogue", item.text.includes("\n"));
   elements.source.textContent = item.source;
   elements.kind.textContent = item.kind;
   rememberQuote(index);

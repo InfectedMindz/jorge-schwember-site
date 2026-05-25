@@ -950,7 +950,7 @@ h3 {
 }
 
 .quote-inner {
-  max-width: 980px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: clamp(82px, 11vw, 138px) clamp(20px, 4vw, 40px);
 }
@@ -960,26 +960,13 @@ h3 {
 }
 
 .quote-inner blockquote {
+  max-width: 980px;
   margin: 0;
   color: var(--surface);
   font-family: var(--serif);
-  font-size: clamp(2.4rem, 5.5vw, 5.4rem);
-  line-height: 1.04;
+  font-size: clamp(2.05rem, 3.8vw, 3.45rem);
+  line-height: 1.14;
   white-space: pre-line;
-}
-
-.quote-inner blockquote.quote-long {
-  font-size: clamp(1.75rem, 3.6vw, 3.5rem);
-  line-height: 1.12;
-}
-
-.quote-inner blockquote.quote-extra-long {
-  font-size: clamp(1.28rem, 2.55vw, 2.45rem);
-  line-height: 1.18;
-}
-
-.quote-inner blockquote.quote-dialogue {
-  line-height: 1.2;
 }
 
 .quote-source-row {
@@ -1775,14 +1762,9 @@ h3 {
     font-size: clamp(2.4rem, 14vw, 3.9rem);
   }
 
-  .quote-inner blockquote.quote-long {
-    font-size: 1.48rem;
-    line-height: 1.18;
-  }
-
-  .quote-inner blockquote.quote-extra-long {
-    font-size: 1.16rem;
-    line-height: 1.22;
+  .quote-inner blockquote {
+    font-size: 1.64rem;
+    line-height: 1.2;
   }
 
   .story-card {
