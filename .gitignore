@@ -1,0 +1,9 @@
+.tools/
+*.log
+server-*.err.log
+server-*.log
+cloudflared-*.log
+cloudflared-*.err.log
+assets/jorge-schwember-logo.png
+assets/jorge-schwember-portrait.jpeg
+assets/jorge-schwember-portrait-crop.jpeg
