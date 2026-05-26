@@ -214,7 +214,7 @@ function renderStoryReader(index, shouldFocus) {
     ? story.paragraphs
     : story.paragraphs.slice(0, previewParagraphCount);
   const hiddenParagraphCount = story.paragraphs.length - visibleParagraphs.length;
-  const buyLabel = "Comprar Veinte relatos";
+  const buyLabel = "Comprar Veinte relatos de sátira";
 
   reader.innerHTML = `
     <header class="story-reader-header">
