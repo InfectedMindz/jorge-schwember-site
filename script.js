@@ -2,16 +2,20 @@ const storyPreviews = Array.isArray(window.storyPreviews) ? window.storyPreviews
 
 const testimonials = [
   {
-    quote: "Una escritura que observa con precisión quirúrgica y desconfía de toda solemnidad excesiva.",
-    source: "Precisión narrativa",
-  },
-  {
-    quote: "Relatos donde la memoria familiar, el absurdo cotidiano y la ironía dialogan sin pedir permiso.",
-    source: "Sátira y memoria",
+    quote: "Humor con filo, memoria familiar y una ironía que incomoda justo donde la solemnidad se relaja.",
+    source: "Sátira y carácter",
   },
   {
     quote: "La experiencia médica aparece como una forma de mirar: atenta al detalle, al cuerpo y a sus historias.",
     source: "Oficio clínico",
+  },
+  {
+    quote: "Cultura, historia, música y familia se cruzan en relatos que prefieren la lucidez al adorno.",
+    source: "Lectura culta",
+  },
+  {
+    quote: "Sus libros ofrecen una puerta breve y directa: leer una muestra, reconocer la voz y seguir al volumen completo.",
+    source: "Entrada al libro",
   },
 ];
 
@@ -125,6 +129,7 @@ const quotePool = [
 
 let quoteDeck = [];
 let recentQuoteIndexes = [];
+const expandedStories = new Set();
 
 function escapeHTML(value) {
   return String(value)
@@ -139,12 +144,20 @@ function formatNumber(value) {
   return new Intl.NumberFormat("es-CL").format(value);
 }
 
+function getPreviewParagraphCount(story) {
+  return Math.min(1, story.paragraphs.length);
+}
+
+function formatParagraphLabel(count) {
+  return `${count} ${count === 1 ? "párrafo" : "párrafos"}`;
+}
+
 function renderStoryLibrary() {
   const container = document.querySelector("#story-library");
   if (!container) return;
 
   if (!storyPreviews.length) {
-    container.innerHTML = `<p class="story-empty">Los relatos de muestra estarán disponibles próximamente.</p>`;
+    container.innerHTML = `<p class="story-empty">No fue posible cargar las muestras en este momento.</p>`;
     return;
   }
 
@@ -162,7 +175,7 @@ function renderStoryLibrary() {
             <span class="card-meta">${escapeHTML(story.meta)}</span>
             <strong>${escapeHTML(story.title)}</strong>
             <span>${escapeHTML(story.dek)}</span>
-            <small>${formatNumber(story.wordCount)} palabras · ${story.readingMinutes} min</small>
+            <small>Muestra inicial · ${formatParagraphLabel(getPreviewParagraphCount(story))}</small>
           </button>`
         )
         .join("")}
@@ -195,30 +208,61 @@ function renderStoryReader(index, shouldFocus) {
   const story = storyPreviews[safeIndex];
   const previousIndex = (safeIndex - 1 + storyPreviews.length) % storyPreviews.length;
   const nextIndex = (safeIndex + 1) % storyPreviews.length;
+  const isExpanded = expandedStories.has(story.id);
+  const previewParagraphCount = getPreviewParagraphCount(story);
+  const visibleParagraphs = isExpanded
+    ? story.paragraphs
+    : story.paragraphs.slice(0, previewParagraphCount);
+  const hiddenParagraphCount = story.paragraphs.length - visibleParagraphs.length;
+  const buyLabel = "Comprar Veinte relatos";
 
   reader.innerHTML = `
     <header class="story-reader-header">
       <p class="eyebrow">Lectura de muestra</p>
       <h3>${escapeHTML(story.title)}</h3>
       <p class="story-reader-dek">${escapeHTML(story.dek)}</p>
+      <div class="story-reader-actions story-reader-actions-top">
+        <a class="button primary" href="${escapeHTML(
+          story.amazonUrl
+        )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
+        ${
+          hiddenParagraphCount > 0
+            ? `<button class="button secondary" type="button" data-story-expand>${isExpanded ? "Muestra completa visible" : "Seguir leyendo la muestra"}</button>`
+            : ""
+        }
+      </div>
       <dl class="story-facts" aria-label="Datos del relato">
         <div>
           <dt>Libro</dt>
           <dd>${escapeHTML(story.book)}</dd>
         </div>
         <div>
-          <dt>Extensión</dt>
-          <dd>${formatNumber(story.wordCount)} palabras</dd>
+          <dt>Muestra</dt>
+          <dd>${
+            isExpanded
+              ? "Texto completo de muestra"
+              : `${formatParagraphLabel(previewParagraphCount)} ${
+                  previewParagraphCount === 1 ? "inicial" : "iniciales"
+                }`
+          }</dd>
         </div>
         <div>
-          <dt>Lectura</dt>
-          <dd>${story.readingMinutes} min</dd>
+          <dt>Libro completo</dt>
+          <dd>${formatNumber(story.wordCount)} palabras</dd>
         </div>
       </dl>
     </header>
     <div class="story-prose">
-      ${story.paragraphs.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")}
+      ${visibleParagraphs.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")}
     </div>
+    ${
+      hiddenParagraphCount > 0 && !isExpanded
+        ? `<aside class="story-preview-gate">
+            <p>Esta es una muestra breve para reconocer la voz del libro. Quedan ${hiddenParagraphCount} párrafos disponibles en esta lectura de muestra.</p>
+            <button class="button secondary" type="button" data-story-expand>Seguir leyendo la muestra</button>
+          </aside>`
+        : ""
+    }
     <footer class="story-reader-footer">
       <p>
         Esta muestra pertenece a <em>${escapeHTML(story.book)}</em>. El libro completo está
@@ -227,7 +271,7 @@ function renderStoryReader(index, shouldFocus) {
       <div class="story-reader-actions">
         <a class="button primary" href="${escapeHTML(
           story.amazonUrl
-        )}" target="_blank" rel="noopener noreferrer">Comprar ahora</a>
+        )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
         <button class="button ghost" type="button" data-story-nav="${previousIndex}">Relato anterior</button>
         <button class="button ghost" type="button" data-story-nav="${nextIndex}">Siguiente relato</button>
       </div>
@@ -237,6 +281,15 @@ function renderStoryReader(index, shouldFocus) {
   reader.querySelectorAll("[data-story-nav]").forEach((button) => {
     button.addEventListener("click", () => {
       renderStoryReader(Number(button.dataset.storyNav), true);
+    });
+  });
+
+  reader.querySelectorAll("[data-story-expand]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!expandedStories.has(story.id)) {
+        expandedStories.add(story.id);
+        renderStoryReader(safeIndex, true);
+      }
     });
   });
 

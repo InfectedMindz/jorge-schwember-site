@@ -198,7 +198,7 @@ section[id] {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(250px, 0.58fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.56fr) minmax(340px, 0.44fr);
   align-items: center;
   gap: clamp(30px, 7vw, 94px);
   max-width: var(--max-width);
@@ -229,6 +229,84 @@ section[id] {
   width: clamp(205px, 28vw, 360px);
   height: clamp(205px, 28vw, 360px);
   box-shadow: var(--shadow);
+}
+
+.hero-books {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-height: 560px;
+  padding: clamp(18px, 3vw, 34px);
+}
+
+.hero-books .hero-emblem {
+  position: absolute;
+  top: 18px;
+  right: clamp(16px, 3vw, 34px);
+  z-index: 3;
+  width: clamp(72px, 9vw, 104px);
+  height: clamp(72px, 9vw, 104px);
+  border: 1px solid rgba(143, 116, 64, 0.34);
+  box-shadow: 0 14px 34px rgba(22, 20, 18, 0.14);
+}
+
+.hero-cover-stack {
+  position: relative;
+  width: min(100%, 470px);
+  height: clamp(400px, 44vw, 510px);
+}
+
+.hero-book {
+  position: absolute;
+  margin: 0;
+}
+
+.hero-book img {
+  display: block;
+  height: auto;
+  border: 1px solid rgba(22, 20, 18, 0.18);
+  background: var(--surface);
+  box-shadow: 0 24px 60px rgba(22, 20, 18, 0.18);
+}
+
+.hero-book figcaption {
+  margin-top: 12px;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 790;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.hero-book-primary {
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.hero-book-primary img {
+  width: clamp(210px, 22vw, 265px);
+}
+
+.hero-book-secondary {
+  top: 46px;
+  right: 0;
+  z-index: 1;
+  transform: rotate(2.4deg);
+}
+
+.hero-book-secondary img {
+  width: clamp(176px, 18vw, 225px);
+  background: var(--ink);
+}
+
+.hero-books p {
+  max-width: 410px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  text-align: center;
 }
 
 .ornament-line {
@@ -383,6 +461,22 @@ h3 {
 .button.secondary:hover,
 .button.secondary:focus-visible {
   border-color: var(--gold);
+}
+
+.button.quiet,
+.button.ghost {
+  border-color: var(--line-strong);
+  color: var(--ink-soft);
+  background: transparent;
+}
+
+.button.quiet:hover,
+.button.quiet:focus-visible,
+.button.ghost:hover,
+.button.ghost:focus-visible {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: rgba(255, 253, 248, 0.72);
 }
 
 .intro-section {
@@ -561,7 +655,7 @@ h3 {
 }
 
 .research-areas article {
-  min-height: 260px;
+  min-height: 210px;
   padding: clamp(22px, 3vw, 30px);
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
@@ -574,7 +668,7 @@ h3 {
 
 .research-areas span {
   display: block;
-  margin-bottom: 34px;
+  margin-bottom: 24px;
   color: var(--gold);
   font-family: var(--serif);
   font-size: 2.4rem;
@@ -589,6 +683,63 @@ h3 {
 .publication-panel p,
 .publication-item p {
   color: var(--muted);
+}
+
+.publication-disclosure {
+  margin-top: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.publication-disclosure summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 26px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  box-shadow: 0 16px 40px rgba(22, 20, 18, 0.07);
+  cursor: pointer;
+  list-style: none;
+}
+
+.publication-disclosure summary::-webkit-details-marker {
+  display: none;
+}
+
+.publication-disclosure summary span {
+  color: var(--gold);
+  font-size: 0.74rem;
+  font-weight: 790;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.publication-disclosure summary strong {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(1.32rem, 2.4vw, 2rem);
+  font-weight: 500;
+}
+
+.publication-disclosure summary::after {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--gold);
+  content: "+";
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.publication-disclosure[open] summary::after {
+  content: "–";
 }
 
 .publication-panel {
@@ -910,6 +1061,30 @@ h3 {
   font-size: 1.04rem;
 }
 
+.reader-promise {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-left: 2px solid var(--gold);
+  background: rgba(248, 244, 237, 0.72);
+}
+
+.reader-promise span {
+  display: block;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 790;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.reader-promise p {
+  margin: 8px 0 0 !important;
+  color: var(--ink-soft) !important;
+  font-family: var(--serif);
+  font-size: 1.15rem !important;
+  line-height: 1.42;
+}
+
 .book-meta {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1085,6 +1260,10 @@ h3 {
   margin-top: 42px;
 }
 
+.testimonial-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .text-card,
 .testimonial-card {
   min-height: 310px;
@@ -1239,6 +1418,10 @@ h3 {
   line-height: 1.7;
 }
 
+.story-reader-actions-top {
+  margin-top: 22px;
+}
+
 .story-facts {
   display: grid;
   grid-template-columns: 1.25fr repeat(2, minmax(110px, 0.55fr));
@@ -1281,6 +1464,18 @@ h3 {
 
 .story-prose p + p {
   margin-top: 1.15em;
+}
+
+.story-preview-gate {
+  margin-top: 28px;
+  padding: 22px;
+  border: 1px solid rgba(143, 116, 64, 0.32);
+  background: rgba(255, 253, 248, 0.76);
+}
+
+.story-preview-gate p {
+  margin: 0 0 16px;
+  color: var(--muted);
 }
 
 .story-reader-footer {
@@ -1600,6 +1795,23 @@ h3 {
     order: -1;
   }
 
+  .hero-books {
+    min-height: 430px;
+    order: -1;
+  }
+
+  .hero-cover-stack {
+    height: 360px;
+  }
+
+  .hero-book-primary img {
+    width: min(46vw, 220px);
+  }
+
+  .hero-book-secondary img {
+    width: min(38vw, 180px);
+  }
+
   .hero-mark {
     width: 178px;
     height: 178px;
@@ -1687,7 +1899,46 @@ h3 {
   }
 
   .hero {
-    padding-top: 34px;
+    gap: 26px;
+    padding-top: 30px;
+  }
+
+  .hero-books {
+    min-height: 310px;
+    padding: 0 0 8px;
+  }
+
+  .hero-books .hero-emblem {
+    top: 0;
+    right: 2px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .hero-cover-stack {
+    width: min(100%, 310px);
+    height: 255px;
+  }
+
+  .hero-book-primary img {
+    width: 150px;
+  }
+
+  .hero-book-secondary {
+    top: 30px;
+  }
+
+  .hero-book-secondary img {
+    width: 126px;
+  }
+
+  .hero-book figcaption {
+    font-size: 0.62rem;
+  }
+
+  .hero-books p {
+    margin-top: 8px;
+    font-size: 0.92rem;
   }
 
   h1 {
@@ -1723,6 +1974,7 @@ h3 {
   .story-reader,
   .publication-panel,
   .archive-strip,
+  .publication-disclosure summary,
   .medical-index-card,
   .research-areas article {
     padding: 22px;
@@ -1782,6 +2034,10 @@ h3 {
 
   .story-reader-actions {
     flex-direction: column;
+  }
+
+  .publication-disclosure summary {
+    align-items: flex-start;
   }
 
   .newsletter-inner {
