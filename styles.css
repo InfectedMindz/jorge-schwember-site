@@ -1563,33 +1563,6 @@ h3 {
   margin-top: 22px;
 }
 
-.story-facts {
-  display: grid;
-  grid-template-columns: 1.25fr repeat(2, minmax(110px, 0.55fr));
-  gap: 12px;
-  margin: 26px 0 0;
-}
-
-.story-facts div {
-  padding: 14px;
-  border-top: 1px solid var(--line-strong);
-  background: rgba(255, 253, 248, 0.7);
-}
-
-.story-facts dt {
-  color: var(--gold);
-  font-size: 0.72rem;
-  font-weight: 790;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.story-facts dd {
-  margin: 8px 0 0;
-  color: var(--ink-soft);
-  line-height: 1.35;
-}
-
 .story-prose {
   max-width: 780px;
   margin: 30px auto 0;
@@ -1969,7 +1942,6 @@ h3 {
   }
 
   .book-meta,
-  .story-facts,
   .media-grid,
   .review-panel,
   .video-card,

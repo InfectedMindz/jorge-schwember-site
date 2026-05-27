@@ -139,10 +139,6 @@ function escapeHTML(value) {
     .replaceAll("'", "&#039;");
 }
 
-function formatNumber(value) {
-  return new Intl.NumberFormat("es-CL").format(value);
-}
-
 function renderStoryLibrary() {
   const container = document.querySelector("#story-library");
   if (!container) return;
@@ -166,7 +162,7 @@ function renderStoryLibrary() {
             <span class="card-meta">${escapeHTML(story.meta)}</span>
             <strong>${escapeHTML(story.title)}</strong>
             <span>${escapeHTML(story.dek)}</span>
-            <small>Muestra parcial · ${story.previewPercent}% del cuento</small>
+            <small>Lectura de muestra</small>
           </button>`
         )
         .join("")}
@@ -211,26 +207,12 @@ function renderStoryReader(index, shouldFocus) {
           story.amazonUrl
         )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
       </div>
-      <dl class="story-facts" aria-label="Datos del relato">
-        <div>
-          <dt>Libro</dt>
-          <dd>${escapeHTML(story.book)}</dd>
-        </div>
-        <div>
-          <dt>Muestra</dt>
-          <dd>${story.previewPercent}% del cuento</dd>
-        </div>
-        <div>
-          <dt>Libro completo</dt>
-          <dd>${formatNumber(story.wordCount)} palabras</dd>
-        </div>
-      </dl>
     </header>
     <div class="story-prose">
       ${story.paragraphs.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")}
     </div>
-    <aside class="story-preview-gate" aria-label="Fin de la muestra parcial">
-      <p>${escapeHTML(story.cutNote)}</p>
+    <aside class="story-preview-gate" aria-label="Continuar leyendo">
+      <p>Continúa la lectura en la edición Kindle.</p>
       <a class="button primary" href="${escapeHTML(
         story.amazonUrl
       )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
