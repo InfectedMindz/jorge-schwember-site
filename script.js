@@ -202,11 +202,6 @@ function renderStoryReader(index, shouldFocus) {
       <p class="eyebrow">Lectura de muestra</p>
       <h3>${escapeHTML(story.title)}</h3>
       <p class="story-reader-dek">${escapeHTML(story.dek)}</p>
-      <div class="story-reader-actions story-reader-actions-top">
-        <a class="button primary" href="${escapeHTML(
-          story.amazonUrl
-        )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
-      </div>
     </header>
     <div class="story-prose">
       ${story.paragraphs.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")}
