@@ -1580,18 +1580,6 @@ h3 {
   margin-top: 1.15em;
 }
 
-.story-preview-gate {
-  margin-top: 28px;
-  padding: 22px;
-  border: 1px solid rgba(143, 116, 64, 0.32);
-  background: rgba(255, 253, 248, 0.76);
-}
-
-.story-preview-gate p {
-  margin: 0 0 16px;
-  color: var(--muted);
-}
-
 .story-reader-footer {
   margin-top: 38px;
   padding-top: 24px;

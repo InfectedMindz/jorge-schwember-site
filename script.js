@@ -211,12 +211,6 @@ function renderStoryReader(index, shouldFocus) {
     <div class="story-prose">
       ${story.paragraphs.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")}
     </div>
-    <aside class="story-preview-gate" aria-label="Continuar leyendo">
-      <p>Continúa la lectura en la edición Kindle.</p>
-      <a class="button primary" href="${escapeHTML(
-        story.amazonUrl
-      )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
-    </aside>
     <footer class="story-reader-footer">
       <p>
         Esta lectura reproduce sólo una parte del cuento. Para leerlo completo, continúa en
