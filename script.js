@@ -129,7 +129,6 @@ const quotePool = [
 
 let quoteDeck = [];
 let recentQuoteIndexes = [];
-const expandedStories = new Set();
 
 function escapeHTML(value) {
   return String(value)
@@ -142,14 +141,6 @@ function escapeHTML(value) {
 
 function formatNumber(value) {
   return new Intl.NumberFormat("es-CL").format(value);
-}
-
-function getPreviewParagraphCount(story) {
-  return Math.min(1, story.paragraphs.length);
-}
-
-function formatParagraphLabel(count) {
-  return `${count} ${count === 1 ? "párrafo" : "párrafos"}`;
 }
 
 function renderStoryLibrary() {
@@ -175,7 +166,7 @@ function renderStoryLibrary() {
             <span class="card-meta">${escapeHTML(story.meta)}</span>
             <strong>${escapeHTML(story.title)}</strong>
             <span>${escapeHTML(story.dek)}</span>
-            <small>Muestra inicial · ${formatParagraphLabel(getPreviewParagraphCount(story))}</small>
+            <small>Muestra parcial · ${story.previewPercent}% del cuento</small>
           </button>`
         )
         .join("")}
@@ -208,12 +199,6 @@ function renderStoryReader(index, shouldFocus) {
   const story = storyPreviews[safeIndex];
   const previousIndex = (safeIndex - 1 + storyPreviews.length) % storyPreviews.length;
   const nextIndex = (safeIndex + 1) % storyPreviews.length;
-  const isExpanded = expandedStories.has(story.id);
-  const previewParagraphCount = getPreviewParagraphCount(story);
-  const visibleParagraphs = isExpanded
-    ? story.paragraphs
-    : story.paragraphs.slice(0, previewParagraphCount);
-  const hiddenParagraphCount = story.paragraphs.length - visibleParagraphs.length;
   const buyLabel = "Comprar Veinte relatos de sátira";
 
   reader.innerHTML = `
@@ -225,11 +210,6 @@ function renderStoryReader(index, shouldFocus) {
         <a class="button primary" href="${escapeHTML(
           story.amazonUrl
         )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
-        ${
-          hiddenParagraphCount > 0
-            ? `<button class="button secondary" type="button" data-story-expand>${isExpanded ? "Muestra completa visible" : "Seguir leyendo la muestra"}</button>`
-            : ""
-        }
       </div>
       <dl class="story-facts" aria-label="Datos del relato">
         <div>
@@ -238,13 +218,7 @@ function renderStoryReader(index, shouldFocus) {
         </div>
         <div>
           <dt>Muestra</dt>
-          <dd>${
-            isExpanded
-              ? "Texto completo de muestra"
-              : `${formatParagraphLabel(previewParagraphCount)} ${
-                  previewParagraphCount === 1 ? "inicial" : "iniciales"
-                }`
-          }</dd>
+          <dd>${story.previewPercent}% del cuento</dd>
         </div>
         <div>
           <dt>Libro completo</dt>
@@ -253,20 +227,18 @@ function renderStoryReader(index, shouldFocus) {
       </dl>
     </header>
     <div class="story-prose">
-      ${visibleParagraphs.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")}
+      ${story.paragraphs.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")}
     </div>
-    ${
-      hiddenParagraphCount > 0 && !isExpanded
-        ? `<aside class="story-preview-gate">
-            <p>Esta es una muestra breve para reconocer la voz del libro. Quedan ${hiddenParagraphCount} párrafos disponibles en esta lectura de muestra.</p>
-            <button class="button secondary" type="button" data-story-expand>Seguir leyendo la muestra</button>
-          </aside>`
-        : ""
-    }
+    <aside class="story-preview-gate" aria-label="Fin de la muestra parcial">
+      <p>${escapeHTML(story.cutNote)}</p>
+      <a class="button primary" href="${escapeHTML(
+        story.amazonUrl
+      )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
+    </aside>
     <footer class="story-reader-footer">
       <p>
-        Esta muestra pertenece a <em>${escapeHTML(story.book)}</em>. El libro completo está
-        disponible en edición digital.
+        Esta lectura reproduce sólo una parte del cuento. Para leerlo completo, continúa en
+        <em>${escapeHTML(story.book)}</em>, disponible en edición digital.
       </p>
       <div class="story-reader-actions">
         <a class="button primary" href="${escapeHTML(
@@ -281,15 +253,6 @@ function renderStoryReader(index, shouldFocus) {
   reader.querySelectorAll("[data-story-nav]").forEach((button) => {
     button.addEventListener("click", () => {
       renderStoryReader(Number(button.dataset.storyNav), true);
-    });
-  });
-
-  reader.querySelectorAll("[data-story-expand]").forEach((button) => {
-    button.addEventListener("click", () => {
-      if (!expandedStories.has(story.id)) {
-        expandedStories.add(story.id);
-        renderStoryReader(safeIndex, true);
-      }
     });
   });
 
