@@ -195,7 +195,8 @@ function renderStoryReader(index, shouldFocus) {
   const story = storyPreviews[safeIndex];
   const previousIndex = (safeIndex - 1 + storyPreviews.length) % storyPreviews.length;
   const nextIndex = (safeIndex + 1) % storyPreviews.length;
-  const buyLabel = "Comprar Veinte relatos de sátira";
+  const publisherBuyLabel = "Comprar en Nueva Carpeta";
+  const amazonBuyLabel = "Kindle en Amazon";
 
   reader.innerHTML = `
     <header class="story-reader-header">
@@ -209,12 +210,19 @@ function renderStoryReader(index, shouldFocus) {
     <footer class="story-reader-footer">
       <p>
         Esta lectura reproduce sólo una parte del cuento. Para leerlo completo, continúa en
-        <em>${escapeHTML(story.book)}</em>, disponible en edición digital.
+        <em>${escapeHTML(story.book)}</em>, disponible en Nueva Carpeta Ediciones y Kindle.
       </p>
       <div class="story-reader-actions">
-        <a class="button primary" href="${escapeHTML(
+        ${
+          story.publisherUrl
+            ? `<a class="button primary" href="${escapeHTML(
+                story.publisherUrl
+              )}" target="_blank" rel="noopener noreferrer">${publisherBuyLabel}</a>`
+            : ""
+        }
+        <a class="button secondary" href="${escapeHTML(
           story.amazonUrl
-        )}" target="_blank" rel="noopener noreferrer">${buyLabel}</a>
+        )}" target="_blank" rel="noopener noreferrer">${amazonBuyLabel}</a>
         <button class="button ghost" type="button" data-story-nav="${previousIndex}">Relato anterior</button>
         <button class="button ghost" type="button" data-story-nav="${nextIndex}">Siguiente relato</button>
       </div>
