@@ -657,6 +657,7 @@ h3 {
 
 .medical-index-card,
 .medical-video-feature,
+.clinical-result-feature,
 .publication-panel,
 .research-areas article,
 .archive-strip {
@@ -793,6 +794,52 @@ h3 {
   font-size: 0.94rem;
   line-height: 1.7;
   text-align: center;
+}
+
+.clinical-result-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.64fr) minmax(280px, 0.36fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+  margin-top: 22px;
+  padding: clamp(18px, 3vw, 30px);
+  position: relative;
+  z-index: 1;
+}
+
+.clinical-result-image {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #f4f0e9;
+}
+
+.clinical-result-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.clinical-result-copy {
+  min-width: 0;
+  padding: clamp(6px, 1vw, 12px) clamp(2px, 1vw, 10px);
+}
+
+.clinical-result-copy h3 {
+  font-size: clamp(1.8rem, 3.2vw, 3.15rem);
+  line-height: 1;
+}
+
+.clinical-result-copy p:not(.eyebrow) {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: clamp(0.98rem, 1.35vw, 1.08rem);
+}
+
+.clinical-note {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem !important;
+  line-height: 1.65;
 }
 
 .research-areas {
@@ -1955,6 +2002,7 @@ h3 {
   .intro-inner,
   .medical-hero,
   .medical-video-feature,
+  .clinical-result-feature,
   .publication-panel-head,
   .research-areas,
   .publication-panel,
@@ -2176,6 +2224,7 @@ h3 {
   .publication-disclosure summary,
   .medical-index-card,
   .medical-video-feature,
+  .clinical-result-feature,
   .research-areas article {
     padding: 22px;
   }
