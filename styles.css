@@ -656,6 +656,7 @@ h3 {
 }
 
 .medical-index-card,
+.medical-video-feature,
 .publication-panel,
 .research-areas article,
 .archive-strip {
@@ -710,6 +711,88 @@ h3 {
 .research-button {
   margin-top: 26px;
   align-self: flex-start;
+}
+
+.medical-video-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.58fr) minmax(260px, 0.42fr);
+  gap: clamp(26px, 5vw, 64px);
+  align-items: center;
+  margin-top: 34px;
+  padding: clamp(24px, 5vw, 54px);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.medical-video-feature::before {
+  position: absolute;
+  inset: 18px 18px auto auto;
+  width: min(210px, 28vw);
+  height: min(210px, 28vw);
+  border: 1px solid rgba(143, 111, 55, 0.22);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.medical-video-copy {
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.medical-video-copy h3 {
+  max-width: 760px;
+  font-size: clamp(2.15rem, 4.6vw, 4.5rem);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
+
+.medical-video-copy p:not(.eyebrow) {
+  max-width: 680px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.14rem);
+}
+
+.medical-video-copy .text-link {
+  margin-top: 24px;
+}
+
+.medical-video-media {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.medical-video-frame {
+  width: min(100%, 310px);
+  aspect-ratio: 9 / 16;
+  padding: 10px;
+  border: 1px solid rgba(143, 111, 55, 0.34);
+  background: linear-gradient(180deg, rgba(30, 26, 23, 0.96), rgba(12, 11, 10, 0.98));
+  box-shadow: 0 26px 58px rgba(24, 20, 18, 0.22);
+}
+
+.medical-video-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #111;
+}
+
+.medical-video-media p {
+  max-width: 420px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.7;
+  text-align: center;
 }
 
 .research-areas {
@@ -1871,6 +1954,7 @@ h3 {
   .hero,
   .intro-inner,
   .medical-hero,
+  .medical-video-feature,
   .publication-panel-head,
   .research-areas,
   .publication-panel,
@@ -2091,8 +2175,17 @@ h3 {
   .archive-strip,
   .publication-disclosure summary,
   .medical-index-card,
+  .medical-video-feature,
   .research-areas article {
     padding: 22px;
+  }
+
+  .medical-video-copy h3 {
+    font-size: clamp(2rem, 12vw, 3.25rem);
+  }
+
+  .medical-video-frame {
+    width: min(100%, 280px);
   }
 
   .book-image img {
